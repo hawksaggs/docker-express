@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - "3000:3000"
+    # env_file:
+      # - .env.dev
+    environment:
+      - MONGODB_URL=${MONGODB_URL}
+    command:
+      - node
+      - server.js

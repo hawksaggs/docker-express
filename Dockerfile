@@ -2,13 +2,13 @@ FROM node:14
 
 LABEL "Name" "Ayush Mittal"
 
-WORKDIR /src/app
+WORKDIR /usr/app
 
 COPY package*/.json ./
 
 RUN npm install
 
-COPY . /src/app
+COPY . .
 
 USER node
 
