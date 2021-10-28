@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
 const { MongoClient } = require("mongodb");
 
@@ -36,6 +36,20 @@ const app = express();
 
 app.get("/", (req, res) => {
   res.send("Hello From Docker container!!!!!!");
+});
+
+app.get("/customers", async (req, res) => {
+  try {
+    await client.connect();
+    const db = client.db(dbName);
+    const customerCollection = db.collection("customers");
+    const findResult = await customerCollection.find({}).toArray();
+    console.log("Found documents =>", findResult);
+    await client.close();
+    return res.status(200).json({ data: findResult });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 });
 
 app.listen(3000, () => {
